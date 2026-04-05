@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>10 · DOM Básico</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+    .activo { background: #e0f7e9; border-left: 4px solid green; }
+    .eliminado { opacity: 0.4; text-decoration: line-through; }
+    button { margin: 0.25rem; padding: 0.4rem 0.8rem; cursor: pointer; }
+    li { padding: 0.4rem; margin: 0.25rem 0; list-style: none; border: 1px solid #ddd; }
+    #contador { font-size: 2rem; font-weight: bold; margin: 1rem 0; }
+    input { padding: 0.4rem; width: 200px; }
+  </style>
+</head>
+<body>
+
+  <h2>Ejercicio 1: Contador</h2>
+  <div id="contador">0</div>
+  <button id="btn-sumar">+ Sumar</button>
+  <button id="btn-restar">- Restar</button>
+  <button id="btn-reset">Reset</button>
+
+  <hr>
+
+  <h2>Ejercicio 2: Lista dinámica</h2>
+  <input type="text" id="input-item" placeholder="Nuevo item...">
+  <button id="btn-agregar">Agregar</button>
+  <ul id="lista"></ul>
+
+  <hr>
+
+  <h2>Ejercicio 3: Toggle de clase</h2>
+  <div id="caja" style="padding:1rem; border:1px solid #ccc; display:inline-block">
+    Haz click para activar/desactivar
+  </div>
+
+  <hr>
+
+  <h2>Ejercicio 4: Event delegation</h2>
+  <p>Haz click en cualquier item de la lista de arriba y muestra cuál clickeaste aquí:</p>
+  <div id="seleccionado" style="padding:0.5rem; background:#f0f0f0">ninguno</div>
+
+  <script>
+    // ── EJERCICIO 1: Contador ─────────────────────
+    // Selecciona el elemento #contador y los tres botones
+    // Al hacer click en +: incrementa el número mostrado
+    // Al hacer click en -: decrementa (no bajar de 0)
+    // Al hacer click en reset: vuelve a 0
+    document.querySelector('#btn-sumar').addEventListener('click', function() {
+      let contador = document.querySelector('#contador');
+      contador.textContent = parseInt(contador.textContent) + 1;
+    });
+    document.querySelector('#btn-restar').addEventListener('click', function() {
+      let contador = document.querySelector('#contador');
+      let valor = parseInt(contador.textContent);
+      if (valor > 0) {
+        contador.textContent = valor - 1;
+      }
+    });
+    document.querySelector('#btn-reset').addEventListener('click', function() {
+      document.querySelector('#contador').textContent = '0';
+    });
+
+    // ── EJERCICIO 2: Lista dinámica ───────────────
+    // Al hacer click en Agregar:
+    // - Crea un <li> con el texto del input
+    // - Agrega un botón "x" dentro del li para eliminar ese item
+    // - Agrega el li a #lista
+    // - Limpia el input
+    // - Si el input está vacío, no agregar nada
+    document.querySelector('#btn-agregar').addEventListener('click', function() {
+      let input = document.querySelector('#input-item');
+      let valor = input.value.trim();
+      if (valor !== '') {
+        let li = document.createElement('li');
+        li.textContent = valor;
+
+        let btnEliminar = document.createElement('button');
+        btnEliminar.textContent = 'x';
+        btnEliminar.addEventListener('click', function() {
+          li.remove();
+        });
+
+        li.appendChild(btnEliminar);
+        document.querySelector('#lista').appendChild(li);
+        input.value = '';
+      }
+    });
+
+    // ── EJERCICIO 3: Toggle de clase ──────────────
+    // Al hacer click en #caja, toggle la clase "activo"
+    document.querySelector('#caja').addEventListener('click', function() {
+      this.classList.toggle('activo');
+    });
+
+    // ── EJERCICIO 4: Event delegation ─────────────
+    // Agrega UN SOLO listener a #lista
+    // Cuando se haga click en un <li>, muestra su texto en #seleccionado
+    // (ignorar clicks en el botón "x")
+    document.querySelector('#lista').addEventListener('click', function(e) {
+      if (e.target.tagName === 'LI') {
+        document.querySelector('#seleccionado').textContent = e.target.firstChild.textContent;
+      }
+    });
+    
+  </script>
+</body>
+</html>
