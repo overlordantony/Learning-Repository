@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Generador</title>
+    <meta name="description" content="Generador de códigos QR con JavaScript">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <h1>QR Generador</h1>
+    <input type="text" id="url" placeholder="URL">
+    <button id="generate">Generar QR</button>
+
+    <div class="qr-section">
+        <div id="qrcode"></div>
+        <button class="download-button" id="download">Descargar QR</button>
+    </div>
+
+    <small class="credits">
+        <a href="https://github.com/overlordantony" target="_blank" rel="noopener">OverlordAntony</a>
+    </small>
+
+    <div class="notification" id="notification">Por favor, ingresa una URL</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./js/scripts.js"></script>
+</body>
+</html>
